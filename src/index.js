@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SeasonDisplay from "./SeasonDisplay";
+import Loader from "./Loading";
 
 class App extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class App extends React.Component {
       );
     }
     if (!this.state.errorMessage && !this.state.latitide) {
-      return <h1>Loading....</h1>;
+      return <Loader />;
     }
     // <h4 style={{ textAlign: "center" }}>
     //        Coords: {this.state.latitide}, {this.state.longitude}
