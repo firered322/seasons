@@ -38,7 +38,9 @@ class App extends React.Component {
       );
     }
     if (!this.state.errorMessage && !this.state.latitide) {
-      return <Loader />;
+      return (
+        <Loader text="ALLOW LOCATION PERMISSION FOR THE APP TO WORK PROPERLY FFS!!!!" />
+      );
     }
     // <h4 style={{ textAlign: "center" }}>
     //        Coords: {this.state.latitide}, {this.state.longitude}
