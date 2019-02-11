@@ -1,12 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import SeasonDisplay from "./SeasonDisplay";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      latitide: null,
+      longitude: null,
+      errorMessage: ""
+    };
+  }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  componentDidMount() {
+    window.navigator.geolocation.getCurrentPosition(
+      position =>
+        this.setState({
+          latitide: position.coords.latitude,
+          longitude: position.coords.longitude
+        }),
+      err => this.setState({ errorMessage: err.message })
+    );
+  }
+  // componentDidUpdate() {
+  //   console.log(
+  //     "Component was updated and now shows error or response accordingly"
+  //   );
+  // }
+
+  render() {
+    if (this.state.errorMessage) {
+      return (
+        <div>
+          <h2>Encountered an error: {this.state.errorMessage}</h2>
+        </div>
+      );
+    }
+    if (!this.state.errorMessage && !this.state.latitide) {
+      return <h1>Loading....</h1>;
+    }
+    // <h4 style={{ textAlign: "center" }}>
+    //        Coords: {this.state.latitide}, {this.state.longitude}
+    //      </h4>
+    return (
+      <div>
+        <SeasonDisplay lat={this.state.latitide} />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
